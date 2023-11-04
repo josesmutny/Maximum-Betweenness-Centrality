@@ -17,15 +17,18 @@ class Graph {
     std::vector<std::vector<vertex_t>> m_neighbours;
 
 public:
+    static vertex_t zeroIndex(const size_t v) { return v - 1; }
+    static std::pair<vertex_t, vertex_t> zeroIndex(const size_t u, const size_t v) { return {zeroIndex(u), zeroIndex((v))}; }
+
     Graph(size_t n, size_t m, std::istream &in = std::cin);
 
-    Graph();
+    explicit Graph(std::istream &in = std::cin);
 
     std::vector<vertex_t> const & getNeighbours(vertex_t u) const;
 
     bool areConnected(vertex_t u, vertex_t v) const;
 
-    void addEdge(vertex_t u, vertex_t v);
+    Graph & addEdge(vertex_t u, vertex_t v);
 
     /**
      * Prints graph to ostream with the following format:

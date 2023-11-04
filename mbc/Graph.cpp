@@ -6,15 +6,16 @@ Graph::Graph(const size_t n, const size_t m, std::istream &in) :
         m_neighbours(n, std::vector<size_t>()){
 
     for (int edgeIndex = 0; edgeIndex < m_m; ++edgeIndex) {
-        vertex_t a, b;
+        size_t a, b;
         in >> a >> b;
-        addEdge(--a, --b); // zero-index
+        addEdge(a, b);
     }
 }
 
-Graph::Graph() {
-    std::cin >> m_n >> m_m;
-    *this = Graph(m_n, m_m);
+Graph::Graph(std::istream &in) {
+    size_t n, m;
+    in >> n >> m;
+    *this = Graph(n, m, in);
 }
 
 std::vector<vertex_t> const &Graph::getNeighbours(const vertex_t u) const {
@@ -22,15 +23,17 @@ std::vector<vertex_t> const &Graph::getNeighbours(const vertex_t u) const {
 }
 
 bool Graph::areConnected(const vertex_t u, const vertex_t v) const {
-    bool uHasMoreNeighbours = m_neighbours[u].size() > m_neighbours[v].size();
-    auto &neighbours = m_neighbours[uHasMoreNeighbours ? v : u];
-    auto value = uHasMoreNeighbours ? u : v;
+    auto [s, t] = zeroIndex(u, v);
+    bool sHasMoreNeighbours = m_neighbours[s].size() > m_neighbours[t].size();
+    auto &neighbours = m_neighbours[sHasMoreNeighbours ? t : s];
+    auto value = sHasMoreNeighbours ? s : t;
     return std::find(neighbours.begin(), neighbours.end(), value) != neighbours.end();
 }
 
-void Graph::addEdge(const vertex_t u, const vertex_t v) {
-    m_neighbours[u].push_back(v);
-    m_neighbours[v].push_back(u);
+Graph & Graph::addEdge(vertex_t u, vertex_t v) {
+    m_neighbours[zeroIndex(u)].push_back(zeroIndex(v));
+    m_neighbours[zeroIndex(v)].push_back(zeroIndex(u));
+    return *this;
 }
 
 std::ostream &operator<<(std::ostream &out, const Graph &g) {
@@ -39,8 +42,8 @@ std::ostream &operator<<(std::ostream &out, const Graph &g) {
         auto const &neighbours = g.m_neighbours[src];
         for(auto neighbour: neighbours) {
             if(src < neighbour)
-                out << src << ' ' << neighbour << '\n';
+                out << src + 1 << ' ' << neighbour + 1 << '\n'; // zero-index to one-index
         }
     }
-    return out << std::endl;
+    return out << std::flush;
 }
