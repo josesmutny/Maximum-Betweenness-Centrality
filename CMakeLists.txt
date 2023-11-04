@@ -5,8 +5,7 @@ set(CMAKE_CXX_STANDARD 17)
 
 add_executable(mbc
         mbc/main.cpp
-        mbc/mbc.cpp
-        mbc/mbc.h
+		mbc/mbc.hpp
         mbc/Graph.cpp
         mbc/Graph.h)
 
