@@ -26,7 +26,7 @@ public:
 
     std::vector<vertex_t> const & getNeighbours(vertex_t u) const;
 
-    bool areConnected(vertex_t u, vertex_t v) const;
+    bool hasEdge(vertex_t u, vertex_t v) const;
 
     Graph & addEdge(vertex_t u, vertex_t v);
 

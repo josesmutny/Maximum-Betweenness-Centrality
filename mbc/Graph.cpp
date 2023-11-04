@@ -22,7 +22,7 @@ std::vector<vertex_t> const &Graph::getNeighbours(const vertex_t u) const {
     return m_neighbours[u];
 }
 
-bool Graph::areConnected(const vertex_t u, const vertex_t v) const {
+bool Graph::hasEdge(vertex_t u, vertex_t v) const {
     auto [s, t] = zeroIndex(u, v);
     bool sHasMoreNeighbours = m_neighbours[s].size() > m_neighbours[t].size();
     auto &neighbours = m_neighbours[sHasMoreNeighbours ? t : s];

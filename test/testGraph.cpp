@@ -16,13 +16,13 @@ void testDefaultConstructor() {
     for (int i = 0; i < 6; ++i) {
         for (int j = 0; j < 6; ++j) {
             if(i == 0 xor j == 0)
-                test(graph.areConnected(i + 1, j + 1), "Missing edge during construction with given sizes");
+                test(graph.hasEdge(i + 1, j + 1), "Missing edge during construction with given sizes");
             else
-                test(!graph.areConnected(i + 1, j + 1), "Unexpected edge during construction with given sizes");
+                test(!graph.hasEdge(i + 1, j + 1), "Unexpected edge during construction with given sizes");
 
             // check edge symmetry
             if(i != j)
-                test(graph.areConnected(i + 1, j + 1) == graph.areConnected(j + 1, i + 1), "Edges are not symmetrical");
+                test(graph.hasEdge(i + 1, j + 1) == graph.hasEdge(j + 1, i + 1), "Edges are not symmetrical");
         }
     }
 
@@ -35,7 +35,7 @@ void testDefaultConstructor() {
     for (int i = 0; i < 100; ++i) {
         for (int j = 0; j < 100; ++j) {
             // TODO rename to hasEdge(...)
-            test(!graph.areConnected(i + 1, j + 1), "Unexpected edge in empty graph");
+            test(!graph.hasEdge(i + 1, j + 1), "Unexpected edge in empty graph");
         }
     }
 }
@@ -48,13 +48,13 @@ void testDefaultConstructorWithoutSize() {
     for (int i = 0; i < 6; ++i) {
         for (int j = 0; j < 6; ++j) {
             if(i == 0 xor j == 0)
-                test(graph.areConnected(i + 1, j + 1), "Missing edge during construction without given sizes");
+                test(graph.hasEdge(i + 1, j + 1), "Missing edge during construction without given sizes");
             else
-                test(!graph.areConnected(i + 1, j + 1), "Unexpected edge during construction without given sizes");
+                test(!graph.hasEdge(i + 1, j + 1), "Unexpected edge during construction without given sizes");
 
             // check edge symmetry
             if(i != j)
-                test(graph.areConnected(i + 1, j + 1) == graph.areConnected(j + 1, i + 1), "Edges are not symmetrical");
+                test(graph.hasEdge(i + 1, j + 1) == graph.hasEdge(j + 1, i + 1), "Edges are not symmetrical");
         }
     }
 
@@ -69,7 +69,7 @@ void testDefaultConstructorWithoutSize() {
     graph = Graph(iss);
     for (int i = 0; i < 100; ++i) {
         for (int j = 0; j < 100; ++j) {
-            test(!graph.areConnected(i + 1, j + 1), "Unexpected edge in empty graph");
+            test(!graph.hasEdge(i + 1, j + 1), "Unexpected edge in empty graph");
         }
     }
 }
@@ -89,12 +89,12 @@ void testAddEdge() {
 
     for (int i = 0; i < 5; ++i)
         for (int j = 0; j < 5; ++j)
-            test(referenceGraph.areConnected(i + 1, j + 1) == testGraph.areConnected(i + 1, j + 1), "Differing edge between reference and added ones");
+            test(referenceGraph.hasEdge(i + 1, j + 1) == testGraph.hasEdge(i + 1, j + 1), "Differing edge between reference and added ones");
 
     // add duplicate edge
     testGraph.addEdge(2, 4);
     testGraph.addEdge(4, 2);
-    test(testGraph.areConnected(2, 4), "Missing edge after double add");
+    test(testGraph.hasEdge(2, 4), "Missing edge after double add");
 }
 
 void testPrint() {
