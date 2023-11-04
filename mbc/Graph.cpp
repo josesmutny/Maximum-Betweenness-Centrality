@@ -47,3 +47,11 @@ std::ostream &operator<<(std::ostream &out, const Graph &g) {
     }
     return out << std::flush;
 }
+
+size_t Graph::vertexCount() const {
+    return m_n;
+}
+
+size_t Graph::edgeCount() const {
+    return m_m;
+}

@@ -37,4 +37,8 @@ public:
      * ...
      */
     friend std::ostream &operator<<(std::ostream &out, const Graph &g);
+
+    size_t vertexCount() const;
+
+    size_t edgeCount() const;
 };
